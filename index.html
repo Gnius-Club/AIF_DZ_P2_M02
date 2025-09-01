@@ -6,342 +6,182 @@
 <title>La Forja de las Contraseñas Mágicas</title>
 <style>
   :root{
-    --bg:#0b1020;
-    --panel:#151b35;
-    --accent:#5ad1ff;
-    --accent2:#8bff8b;
-    --warn:#ffd166;
-    --danger:#ff6b6b;
-    --ink:#e8f1ff;
-    --muted:#9fb3d9;
-    --rune:#2b335c;
+    --bg:#0b1020; --panel:#151b35; --accent:#5ad1ff; --accent2:#8bff8b; --warn:#ffd166;
+    --danger:#ff6b6b; --ink:#e8f1ff; --muted:#9fb3d9; --rune:#2b335c;
     --glow:0 0 12px rgba(90,209,255,.55),0 0 24px rgba(90,209,255,.25);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{
-    margin:0; background:
-      radial-gradient(1200px 600px at 10% -10%, #1b2654 0%, transparent 50%),
-      radial-gradient(1000px 700px at 110% 0%, #1b2654 0%, transparent 50%),
-      linear-gradient(180deg, #0a0e1b 0%, #0b1020 50%, #0b1020 100%);
-    color:var(--ink); font-family: "Trebuchet MS", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  }
-  header{ padding:14px 18px; text-align:center; position:relative;}
-  header h1{ margin:0; font-size: clamp(22px, 3.4vw, 40px); letter-spacing:.5px; text-shadow: var(--glow); }
-  header p{margin:.25rem 0 0; color:var(--muted); font-size: clamp(12px, 1.6vw, 16px)}
-  .wrap{
-    display:grid; gap:14px; padding:14px; height:calc(100% - 92px);
-    grid-template-columns: 260px 1fr 320px;
-  }
-
-  /* Panels */
-  .panel{background:linear-gradient(180deg, #131a36, #0f1630); border:1px solid #273066; border-radius:14px; padding:12px; box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .panel h2{margin:0 0 8px; font-size:18px; color:#cfe6ff}
-  .minor{font-size:13px; color:var(--muted)}
-
-  /* Inventory / runes */
-  .inventory{display:grid; grid-template-columns: repeat(2, 1fr); gap:10px}
-  .rune{
-    user-select:none;
-    background: radial-gradient(120% 120% at 30% 20%, #31407c, #1a2148 60%, #131a36 100%);
-    border:2px solid #3850a3; border-radius:14px; aspect-ratio: 1/1;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:900; font-size:30px; color:white;
-    text-shadow:0 2px 0 rgba(0,0,0,.4), 0 0 10px rgba(255,255,255,.5);
-    box-shadow: inset 0 0 20px rgba(138,187,255,.25), 0 8px 18px rgba(0,0,0,.4);
-    cursor:grab; position:relative; outline:none;
-  }
-  .rune:active{cursor:grabbing; transform:scale(.98)}
-  .rune .label{position:absolute; bottom:6px; font-size:11px; color:#d3e6ff; opacity:.9}
-  .rune[data-type="upper"]{border-color:#8b9cff}
-  .rune[data-type="lower"]{border-color:#9be0ff}
-  .rune[data-type="number"]{border-color:#9cffb6}
-  .rune[data-type="symbol"]{border-color:#ffd39c}
-
-  /* Anvil */
-  .forge{ height:100%; display:grid; grid-template-rows: 200px 1fr auto; gap:10px }
-  .anvil{
-    position:relative; border:2px solid #3b467e; border-radius:16px; padding:10px;
-    background: radial-gradient(150% 80% at 50% 0%, #1e274f, #0f1630 60%),
-                linear-gradient(180deg, rgba(117,180,255,.08), rgba(0,0,0,.15));
-    box-shadow: inset 0 0 40px rgba(90,209,255,.15), inset 0 0 8px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.35);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
-  }
-  .anvil:focus{outline:2px dashed var(--accent); outline-offset:4px}
-  .dropzone{
-    border:2px dashed #4460c5; border-radius:12px; width:95%; height:70%;
-    display:flex; align-items:center; justify-content:center; color:#bcd6ff; gap:6px;
-    padding:8px; text-align:center;
-    box-shadow: inset 0 0 16px rgba(90,209,255,.15);
-  }
+  body{ margin:0; background: radial-gradient(1200px 600px at 10% -10%,#1b2654 0%,#0000 50%),radial-gradient(1000px 700px at 110% 0%,#1b2654 0%,#0000 50%),linear-gradient(180deg,#0a0e1b 0%,#0b1020 50%,#0b1020 100%); color:var(--ink); font-family:"Trebuchet MS",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",Arial,"Apple Color Emoji","Segoe UI Emoji"; }
+  header{padding:14px 18px;text-align:center;position:relative}
+  header h1{margin:0;font-size:clamp(22px,3.4vw,40px);letter-spacing:.5px;text-shadow:var(--glow)}
+  header p{margin:.25rem 0 0;color:var(--muted);font-size:clamp(12px,1.6vw,16px)}
+  #playerTitle{color:var(--warn);font-weight:700;text-shadow:0 0 8px var(--warn)}
+  .wrap{display:grid;gap:14px;padding:14px;height:calc(100% - 110px);grid-template-columns:260px 1fr 320px}
+  .panel{background:linear-gradient(180deg,#131a36,#0f1630);border:1px solid #273066;border-radius:14px;padding:12px;box-shadow:0 10px 30px #00000059}
+  .panel h2{margin:0 0 8px;font-size:18px;color:#cfe6ff}
+  .minor{font-size:13px;color:var(--muted)}
+  .inventory{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .rune{user-select:none;background:radial-gradient(120% 120% at 30% 20%,#31407c,#1a2148 60%,#131a36 100%);border:2px solid #3850a3;border-radius:14px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:30px;color:#fff;text-shadow:0 2px 0 #00000066,0 0 10px #ffffff80;box-shadow:inset 0 0 20px #8abbff40,0 8px 18px #00000066;cursor:grab;position:relative;outline:none}
+  .rune:active{cursor:grabbing;transform:scale(.98)}
+  .rune .label{position:absolute;bottom:6px;font-size:11px;color:#d3e6ff;opacity:.9}
+  .rune[data-type=upper]{border-color:#8b9cff}
+  .rune[data-type=lower]{border-color:#9be0ff}
+  .rune[data-type=number]{border-color:#9cffb6}
+  .rune[data-type=symbol]{border-color:#ffd39c}
+  .forge{height:100%;display:grid;grid-template-rows:200px 1fr auto;gap:10px}
+  .anvil{position:relative;border:2px solid #3b467e;border-radius:16px;padding:10px;background:radial-gradient(150% 80% at 50% 0%,#1e274f,#0f1630 60%),linear-gradient(180deg,rgba(117,180,255,.08),rgba(0,0,0,.15));box-shadow:inset 0 0 40px rgba(90,209,255,.15),inset 0 0 8px #00000066,0 12px 30px #00000059;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  .anvil:focus{outline:2px dashed var(--accent);outline-offset:4px}
+  .dropzone{border:2px dashed #4460c5;border-radius:12px;width:95%;height:70%;display:flex;align-items:center;justify-content:center;color:#bcd6ff;gap:6px;padding:8px;text-align:center;box-shadow:inset 0 0 16px rgba(90,209,255,.15)}
   .dropzone.glow{animation:glow 1.2s ease-out}
-  @keyframes glow{0%{box-shadow: inset 0 0 0 rgba(90,209,255,.0)} 40%{box-shadow: inset 0 0 30px rgba(90,209,255,.7)} 100%{box-shadow: inset 0 0 16px rgba(90,209,255,.15)}}
-  .sparkle{
-    position:absolute; pointer-events:none; width:10px; height:10px; border-radius:50%;
-    background: radial-gradient(circle, #fff, rgba(255,255,255,.1) 70%, transparent 71%);
-    animation: sparkle .9s ease-out forwards;
-    filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #8af5ff);
-  }
-  @keyframes sparkle{to{transform:translateY(-40px) scale(0.5); opacity:0}}
-
-  .password{
-    min-height: 46px;
-    display:flex; gap:6px; flex-wrap:wrap; align-items:center; justify-content:center;
-    padding:6px 10px; background:rgba(18,26,55,.6); border-radius:12px; border:1px solid #33417b;
-    font-weight:700; letter-spacing:1px;
-  }
-  .pwd-char{
-    background:#101737; border:1px solid #4f5da2; padding:6px 8px; border-radius:8px;
-    box-shadow: inset 0 0 10px rgba(90,209,255,.1);
-    font-family: monospace; font-size:18px;
-  }
-
-  .controls{display:flex; gap:8px; flex-wrap:wrap; justify-content:center}
-  button{
-    background:linear-gradient(180deg, #2c3870, #1a2558);
-    border:1px solid #5167d3; color:#eaf3ff; padding:10px 12px; border-radius:10px; cursor:pointer;
-    font-weight:700; letter-spacing:.2px; box-shadow:0 6px 16px rgba(0,0,0,.35);
-  }
+  @keyframes glow{0%{box-shadow:inset 0 0 0 rgba(90,209,255,0)}40%{box-shadow:inset 0 0 30px rgba(90,209,255,.7)}100%{box-shadow:inset 0 0 16px rgba(90,209,255,.15)}}
+  .sparkle,.forging-spark{position:absolute;pointer-events:none;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#fff,rgba(255,255,255,.1) 70%,#0000 71%);filter:drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #8af5ff)}
+  .sparkle{animation:sparkle-up .9s ease-out forwards}
+  @keyframes sparkle-up{to{transform:translateY(-40px) scale(.5);opacity:0}}
+  .forging-spark{animation:forge-fly .7s ease-in forwards}
+  @keyframes forge-fly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(.3);opacity:0}}
+  .password{min-height:46px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center;padding:6px 10px;background:rgba(18,26,55,.6);border-radius:12px;border:1px solid #33417b;font-weight:700;letter-spacing:1px}
+  .pwd-char{background:#101737;border:1px solid #4f5da2;padding:6px 8px;border-radius:8px;box-shadow:inset 0 0 10px rgba(90,209,255,.1);font-family:monospace;font-size:18px;animation:pop-in .3s ease-out;transition:text-shadow .3s,color .3s}
+  @keyframes pop-in{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+  .pwd-char-upper{text-shadow:0 0 8px #8b9cff;color:#c4ccff}
+  .pwd-char-lower{text-shadow:0 0 8px #9be0ff;color:#d1f2ff}
+  .pwd-char-number{text-shadow:0 0 8px #9cffb6;color:#d4ffde}
+  .pwd-char-symbol{text-shadow:0 0 8px #ffd39c;color:#ffe9ce}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  button{background:linear-gradient(180deg,#2c3870,#1a2558);border:1px solid #5167d3;color:#eaf3ff;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:700;letter-spacing:.2px;box-shadow:0 6px 16px #00000059}
   button:hover{filter:brightness(1.08)}
-  .ghost{background:#131a36; border-color:#33417b}
-  .accent{background:linear-gradient(180deg, #1aa0ff, #0d7fd3); border-color:#56c2ff}
-  .danger{background:linear-gradient(180deg, #ff5f5f, #cc3b3b); border-color:#ff9e9e}
-  .success{background:linear-gradient(180deg, #19c779, #0b9f5a); border-color:#67f4b2}
-
-  /* Meter */
-  .meter{
-    height:18px; border-radius:999px; background:#0e1533; border:1px solid #2e3a6e; overflow:hidden; position:relative
-  }
-  .meter .fill{
-    height:100%; width:0%; transition:width .35s ease; background:linear-gradient(90deg, #ff6b6b, #ffd166, #53e88f);
-    box-shadow:0 0 16px rgba(255,255,255,.18) inset;
-  }
-  .meter .tag{
-    position:absolute; top:-28px; right:10px; font-size:12px; padding:3px 6px; border-radius:8px;
-    background:#0e1533; border:1px solid #3c4a88; color:#cfe6ff
-  }
-  .legend{display:flex; gap:8px; align-items:center; justify-content:center; font-size:12px; color:var(--muted)}
-  .dot{width:10px; height:10px; border-radius:50%}
-  .red{background:#ff6b6b}.yellow{background:#ffd166}.green{background:#53e88f}
-
-  /* Characters column */
-  .stage{display:grid; grid-template-rows:auto auto 1fr auto; gap:10px; height:100%}
-  .characters{display:flex; gap:10px; align-items:stretch; justify-content:space-between}
-  .char{ flex:1; border:1px solid #33417b; border-radius:14px; padding:8px;
-    background: radial-gradient(120% 120% at 30% 20%, #2b356e, #1a224e 60%, #101737 100%);
-    position:relative; overflow:hidden; min-height:120px }
-  .char h3{margin:0 0 4px; font-size:14px; color:#d9e6ff}
-  .sprite{ width:80px; height:80px; border-radius:50%; margin:8px auto 0; position:relative;
-    box-shadow: inset 0 0 30px rgba(255,255,255,.18), 0 0 20px rgba(90,209,255,.25);}
-  .maestro .sprite{ background: radial-gradient(circle at 30% 30%, #ffeaa7, #f6d365 30%, #b06ab3 70%); }
-  .ladron .sprite{ background: radial-gradient(circle at 30% 30%, #444, #222 60%, #000 100%); }
-  .chest .sprite{ background: radial-gradient(circle at 30% 30%, #d2a679, #a3703f 60%, #5a3820 100%); }
-  .ladron.attack{animation: attack 1s ease-in-out}
-  @keyframes attack{ 0%{transform:translateX(0)} 30%{transform:translateX(-6px)} 60%{transform:translateX(8px)} 100%{transform:translateX(0)} }
-  .ladron.bounce .sprite{animation: bounce 1.2s ease forwards}
-  @keyframes bounce{ 0%{transform: translateY(0)} 35%{transform: translateY(-26px)} 70%{transform: translateY(0)} 85%{transform: translateY(-8px)} 100%{transform: translateY(0)} }
-  .ladron.break .sprite{animation: crack 0.8s steps(4) forwards}
-  @keyframes crack{ 0%{filter:none} 100%{filter: drop-shadow(0 0 6px #ff6b6b) saturate(1.6) brightness(1.3)} }
-
-  .rules, .log{ border:1px dashed #3b467e; border-radius:12px; padding:8px; background:rgba(13,20,48,.6);
-    font-size:13px; color:#cfe1ff; min-height:54px }
-  .log{max-height:140px; overflow:auto}
-  .sr{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
-
-  /* Gem victory */
-  .gem{
-    display:none; margin:auto; width:100px; height:100px; border-radius:20px;
-    background: conic-gradient(from 0deg, #67e8f9, #93c5fd, #a7f3d0, #fef08a, #fda4af, #67e8f9);
-    filter:saturate(1.2) brightness(1.1);
-    box-shadow:0 0 30px rgba(147, 197, 253, .55), 0 0 60px rgba(103, 232, 249, .35);
-    animation: spin 4s linear infinite;
-  }
-  @keyframes spin{to{transform: rotate(360deg)}}
-
-  /* Footer bar */
-  footer{
-    padding:8px 14px; display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
-    background:linear-gradient(180deg, rgba(20,28,60,.4), rgba(8,12,28,.7));
-    border-top:1px solid #273066;
-  }
-  .pill{ font-size:12px; color:#cfe6ff; border:1px solid #33417b; padding:6px 10px; border-radius:999px; background:#11183a }
-
-  /* Responsive */
-  @media (max-width: 980px){
-    .wrap{grid-template-columns: 1fr; grid-template-rows: auto auto auto}
-    .characters{gap:8px}
-  }
-
-  /* ─────────────── NEW: Picker de runas ─────────────── */
-  .mask{
-    position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; align-items:center; justify-content:center;
-    z-index:50; backdrop-filter: blur(2px);
-  }
-  .modal{ width:min(800px, 94vw); max-height:80vh; overflow:auto;
-    background:linear-gradient(180deg, #0f1630, #0c122a); border:1px solid #3b467e; border-radius:16px; padding:12px; box-shadow:0 20px 60px rgba(0,0,0,.5) }
-  .modal header{ padding:0 0 8px; }
-  .picker-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(48px,1fr)); gap:8px }
-  .pick{
-    user-select:none; text-align:center; padding:10px 0; border-radius:10px; font-weight:800; font-size:20px; cursor:pointer;
-    border:1px solid #4456a4; background:#121a3a; box-shadow: inset 0 0 12px rgba(138,187,255,.12);
-  }
+  button:active{transform:scale(.98)}
+  button:disabled{filter:brightness(.6);cursor:not-allowed}
+  .ghost{background:#131a36;border-color:#33417b}
+  .accent{background:linear-gradient(180deg,#1aa0ff,#0d7fd3);border-color:#56c2ff}
+  .danger{background:linear-gradient(180deg,#ff5f5f,#cc3b3b);border-color:#ff9e9e}
+  .success{background:linear-gradient(180deg,#19c779,#0b9f5a);border-color:#67f4b2}
+  .meter-container{display:flex;flex-direction:column;gap:4px}
+  .meter{height:18px;border-radius:999px;background:#0e1533;border:1px solid #2e3a6e;overflow:hidden;position:relative}
+  .meter .fill{height:100%;width:0;transition:width .35s ease;background:linear-gradient(90deg,#ff6b6b,#ffd166,#8bff8b);box-shadow:0 0 16px rgba(255,255,255,.18) inset}
+  .meter .tag{position:absolute;top:-28px;right:10px;font-size:12px;padding:3px 6px;border-radius:8px;background:#0e1533;border:1px solid #3c4a88;color:#cfe6ff}
+  .score-display{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);padding:0 4px}
+  #highScore.new-record{color:var(--accent2);animation:new-record-glow .8s ease-out}
+  @keyframes new-record-glow{0%{text-shadow:none;transform:scale(1)}50%{text-shadow:0 0 10px var(--accent2);transform:scale(1.1)}100%{text-shadow:none;transform:scale(1)}}
+  .stage{display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;height:100%}
+  .characters{display:flex;gap:10px;align-items:stretch;justify-content:space-between}
+  .char{flex:1;border:1px solid #33417b;border-radius:14px;padding:8px;background:radial-gradient(120% 120% at 30% 20%,#2b356e,#1a224e 60%,#101737 100%);position:relative;overflow:hidden;min-height:120px}
+  .char h3{margin:0 0 4px;font-size:14px;color:#d9e6ff}
+  .sprite{width:80px;height:80px;border-radius:50%;margin:8px auto 0;position:relative;box-shadow:inset 0 0 30px rgba(255,255,255,.18),0 0 20px rgba(90,209,255,.25)}
+  .maestro .sprite{background:radial-gradient(circle at 30% 30%,#ffeaa7,#f6d365 30%,#b06ab3 70%)}
+  .ladron .sprite{background:radial-gradient(circle at 30% 30%,#444,#222 60%,#000 100%)}
+  .chest .sprite{background:radial-gradient(circle at 30% 30%,#d2a679,#a3703f 60%,#5a3820 100%)}
+  .ladron.attack{animation:attack 1s ease-in-out}
+  @keyframes attack{0%{transform:translateX(0)}30%{transform:translateX(-6px)}60%{transform:translateX(8px)}100%{transform:translateX(0)}}
+  .ladron.bounce .sprite{animation:bounce 1.2s ease forwards}
+  @keyframes bounce{0%{transform:translateY(0)}35%{transform:translateY(-26px)}70%{transform:translateY(0)}85%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+  .ladron.break .sprite{animation:crack .8s steps(4) forwards}
+  @keyframes crack{0%{filter:none}100%{filter:drop-shadow(0 0 6px #ff6b6b) saturate(1.6) brightness(1.3)}}
+  .rules,.log{border:1px dashed #3b467e;border-radius:12px;padding:8px;background:rgba(13,20,48,.6);font-size:13px;color:#cfe1ff;min-height:54px}
+  .log{max-height:140px;overflow:auto}
+  .sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .gem{display:none;margin:auto;width:100px;height:100px;border-radius:20px;background:conic-gradient(from 0deg,#67e8f9,#93c5fd,#a7f3d0,#fef08a,#fda4af,#67e8f9);filter:saturate(1.2) brightness(1.1);box-shadow:0 0 30px rgba(147,197,253,.55),0 0 60px rgba(103,232,249,.35);animation:spin 4s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  footer{padding:8px 14px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;background:linear-gradient(180deg,rgba(20,28,60,.4),rgba(8,12,28,.7));border-top:1px solid #273066}
+  .pill{font-size:12px;color:#cfe6ff;border:1px solid #33417b;padding:6px 10px;border-radius:999px;background:#11183a}
+  @media (max-width:980px){.wrap{grid-template-columns:1fr;grid-template-rows:auto auto auto}.characters{gap:8px}}
+  .mask{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:50}
+  .modal{width:min(800px,94vw);max-height:80vh;overflow:auto;background:linear-gradient(180deg,#0f1630,#0c122a);border:1px solid #3b467e;border-radius:16px;padding:12px;box-shadow:0 20px 60px #00000080}
+  .modal header{padding:0 0 8px}
+  .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:8px}
+  .pick{user-select:none;text-align:center;padding:10px 0;border-radius:10px;font-weight:800;font-size:20px;cursor:pointer;border:1px solid #4456a4;background:#121a3a;box-shadow:inset 0 0 12px rgba(138,187,255,.12)}
   .pick:active{transform:scale(.96)}
-  .modal .bar{ display:flex; gap:8px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin:8px 0 10px }
-  .modal .btn-close{ background:#1a224e }
-  .small{font-size:12px; color:#bcd6ff}
-  .kbd{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New",monospace;
-        padding:1px 6px; border-radius:6px; background:#0d1433; border:1px solid #33417b; font-size:12px; color:#d8e7ff }
-
-  /* ─────────────── NEW: Tutorial guiado ─────────────── */
-  .tour-mask{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; z-index:60; /* FIX: permitir clics debajo */ pointer-events:none; }
-  .tour-card{
-    position:fixed; max-width: min(520px, 92vw); background:#0f1630; color:#e8f1ff; border:1px solid #3b467e; border-radius:14px;
-    padding:14px; box-shadow:0 18px 50px rgba(0,0,0,.5); z-index:61
-  }
+  .modal .bar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0 10px}
+  .modal .btn-close{background:#1a224e}
+  .small{font-size:12px;color:#bcd6ff}
+  .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;padding:1px 6px;border-radius:6px;background:#0d1433;border:1px solid #33417b;font-size:12px;color:#d8e7ff}
+  .tour-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:60;pointer-events:none}
+  .tour-card{position:fixed;max-width:min(520px,92vw);background:#0f1630;color:#e8f1ff;border:1px solid #3b467e;border-radius:14px;padding:14px;box-shadow:0 18px 50px #00000080;z-index:61}
   .tour-card h3{margin:.2rem 0 .4rem}
-  .tour-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:10px }
-  .hl{ position:fixed; border:3px solid #67e8f9; border-radius:12px; box-shadow:0 0 20px rgba(103,232,249,.6) inset, 0 0 30px rgba(103,232,249,.3); pointer-events:none; z-index:62; display:none }
+  .tour-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+  .hl{position:fixed;border:3px solid #67e8f9;border-radius:12px;box-shadow:0 0 20px rgba(103,232,249,.6) inset,0 0 30px rgba(103,232,249,.3);pointer-events:none;z-index:62;display:none}
 </style>
 </head>
 <body>
   <header>
     <h1>🔮 La Forja de las Contraseñas Mágicas</h1>
-    <p class="minor">¡Aprende a crear llaves súper seguras combinando ingredientes rúnicos en el Yunque Mágico!</p>
+    <p class="minor">Tu Rango: <span id="playerTitle">Aprendiz de Forja</span></p>
   </header>
 
-  <div class="wrap" role="application" aria-label="Juego: La Forja de las Contraseñas Mágicas">
-    <!-- INVENTORY -->
+  <div class="wrap" role="application">
     <section class="panel" aria-labelledby="inv-title">
       <h2 id="inv-title">📦 Inventario de Runas</h2>
       <p class="minor">Toca una categoría para abrir el selector o arrastra para soltar aleatorios</p>
-      <div class="inventory" id="inventory" aria-describedby="inv-help">
-        <div class="rune" tabindex="0" draggable="true" data-type="upper" aria-label="Mayúscula" title="Clic/Tocar: abre selector • Arrastrar: añade aleatorio">
-          A <span class="label">Mayúscula</span>
-        </div>
-        <div class="rune" tabindex="0" draggable="true" data-type="lower" aria-label="Minúscula" title="Clic/Tocar: abre selector • Arrastrar: añade aleatorio">
-          a <span class="label">Minúscula</span>
-        </div>
-        <div class="rune" tabindex="0" draggable="true" data-type="number" aria-label="Número" title="Clic/Tocar: abre selector • Arrastrar: añade aleatorio">
-          7 <span class="label">Número</span>
-        </div>
-        <div class="rune" tabindex="0" draggable="true" data-type="symbol" aria-label="Símbolo" title="Clic/Tocar: abre selector • Arrastrar: añade aleatorio">
-          # <span class="label">Símbolo</span>
-        </div>
+      <div class="inventory" id="inventory">
+        <div class="rune" tabindex="0" draggable="true" data-type="upper" title="Mayúscula">A<span class="label">Mayúscula</span></div>
+        <div class="rune" tabindex="0" draggable="true" data-type="lower" title="Minúscula">a<span class="label">Minúscula</span></div>
+        <div class="rune" tabindex="0" draggable="true" data-type="number" title="Número">7<span class="label">Número</span></div>
+        <div class="rune" tabindex="0" draggable="true" data-type="symbol" title="Símbolo">#<span class="label">Símbolo</span></div>
       </div>
-      <p id="inv-help" class="sr">Usa las runas para construir tu contraseña.</p>
-      <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap">
+      <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap" id="controls"><!-- ← ID agregado -->
         <button id="btnNarrador" class="ghost" aria-pressed="true">Narrador: ON 🔊</button>
-        <button id="btnMostrar" class="ghost">👁️ Mostrar/ocultar contraseña</button>
-        <button id="btnTutorial" class="accent">❓ Tutorial interactivo</button>
+        <button id="btnMostrar" class="ghost">👁️ Mostrar/ocultar</button>
+        <button id="btnTutorial" class="accent">❓ Tutorial</button>
       </div>
     </section>
 
-    <!-- FORGE -->
     <section class="panel forge" aria-labelledby="forge-title">
       <div>
         <h2 id="forge-title">⚒️ Yunque Mágico</h2>
         <div class="anvil" id="anvil" aria-live="polite">
-          <div id="dropzone" class="dropzone" tabindex="0" aria-label="Zona para soltar runas">
-            Suelta aquí las runas para forjar tu llave…
-          </div>
-          <div class="password" id="password" aria-label="Contraseña forjada"></div>
+          <div id="dropzone" class="dropzone" tabindex="0">Suelta aquí las runas...</div>
+          <div class="password" id="password"></div>
         </div>
       </div>
-
-      <div>
+      <div class="meter-container">
         <h2>🛡️ Medidor de Fortaleza</h2>
-        <div class="meter" aria-label="Medidor de fortaleza de la contraseña" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
           <div class="fill" id="fill"></div>
           <div class="tag" id="meterTag">Débil</div>
         </div>
-        <div class="legend" aria-hidden="true" style="margin-top:6px">
-          <span class="dot red"></span>Débil
-          <span class="dot yellow"></span>Media
-          <span class="dot green"></span>Fuerte
+        <div class="score-display">
+            <span>Puntuación: <b id="currentScore">0</b></span>
+            <span>Récord: <b id="highScore">0</b></span>
         </div>
       </div>
-
       <div class="controls">
-        <button id="btnProbar" class="accent">🧪 Probar contraseña</button>
+        <button id="btnProbar" class="accent">🧪 Probar</button>
         <button id="btnBorrar" class="danger">🧹 Borrar</button>
-        <button id="btnRetroceso" class="ghost">⌫ Quitar último</button>
+        <button id="btnRetroceso" class="ghost">⌫ Quitar</button>
+        <button id="btnCopiar" class="success">📋 Copiar</button>
+        <button id="btnGenerar" class="ghost">🎲 Aleatoria</button>
         <button id="btnModo" class="ghost" aria-pressed="false">🏆 Modo desafío: OFF</button>
         <button id="btnCofreExtra" class="success">🧭 Cofre extra</button>
       </div>
     </section>
 
-    <!-- CHARACTERS / RULES / LOG -->
-    <aside class="panel stage" aria-labelledby="stage-title">
+    <aside class="panel stage" aria-labelledby="stage-title" id="stage"><!-- ← ID agregado -->
       <h2 id="stage-title">🎭 Personajes y Cofres</h2>
-      <div class="characters">
-        <div class="char maestro" aria-label="Maestro Forjador">
-          <h3>🧙‍♂️ Maestro Forjador</h3>
-          <div class="sprite" role="img" aria-label="Mago herrero colorido"></div>
-          <p class="minor" id="maestro-line">Bienvenido, Aprendiz. ¡Forjemos llaves increíbles!</p>
-        </div>
-        <div class="char ladron" id="ladron" aria-label="Ladrón de Secretos">
-          <h3>🕵️‍♂️ Ladrón de Secretos</h3>
-          <div class="sprite" role="img" aria-label="Villano enmascarado"></div>
-          <p class="minor" id="ladron-line">Mmm… contraseñas débiles ¡son mi postre!</p>
-        </div>
-        <div class="char chest" aria-label="Cofre del Conocimiento">
-          <h3>🧰 Cofre</h3>
-          <div class="sprite" role="img" aria-label="Cofre dorado"></div>
-          <div class="gem" id="gem" aria-hidden="true" title="Gema de la Seguridad"></div>
-        </div>
+      <div class="characters" id="characters">
+        <div class="char maestro"><h3>🧙‍♂️ Maestro</h3><div class="sprite"></div><p class="minor" id="maestro-line">¡Forjemos llaves increíbles!</p></div>
+        <div class="char ladron" id="ladron"><h3>🕵️‍♂️ Ladrón</h3><div class="sprite"></div><p class="minor" id="ladron-line">¡Contraseñas débiles son mi postre!</p></div>
+        <div class="char chest"><h3>🧰 Cofre</h3><div class="sprite"></div><div class="gem" id="gem"></div></div>
       </div>
-      <div>
-        <h3>📜 Reglas del Cofre</h3>
-        <div class="rules" id="rules"></div>
-      </div>
-      <div>
-        <h3>🗣️ Mensajes</h3>
-        <div class="log" id="log" aria-live="polite"></div>
-      </div>
+      <div><h3>📜 Reglas del Cofre</h3><div class="rules" id="rules"></div></div>
+      <div><h3>🗣️ Mensajes</h3><div class="log" id="log" aria-live="polite"></div></div>
     </aside>
   </div>
 
   <footer>
-    <span class="pill">Desafío 1: Combina 4 ingredientes distintos</span>
-    <span class="pill">Desafío 2: ¡Resiste el ataque del Ladrón!</span>
+    <span class="pill">Desafío 1: 4 ingredientes distintos</span>
+    <span class="pill">Desafío 2: Resiste al Ladrón</span>
     <span class="pill">Desafío 3: Cofre de Máxima Seguridad</span>
   </footer>
 
   <div id="aria-live" class="sr" aria-live="assertive"></div>
-
-  <!-- Modal Selector de Runas -->
-  <div class="mask" id="pickerMask" aria-hidden="true" role="dialog" aria-labelledby="pickerTitle">
-    <div class="modal" role="document">
-      <header>
-        <h2 id="pickerTitle">🧿 Selector de Runas <span id="pickerType"></span></h2>
-        <div class="small">Clic/tocar para añadir al yunque. También puedes arrastrar las runas desde aquí al yunque.</div>
-      </header>
-      <div class="bar">
-        <div class="small">Tip: atajo <span class="kbd">Enter</span> para añadir la última seleccionada.</div>
-        <div style="display:flex; gap:6px">
-          <button id="btnRandomPick" class="ghost">✨ Añadir aleatoria</button>
-          <button id="btnPickerClose" class="btn-close ghost">Cerrar</button>
-        </div>
-      </div>
-      <div id="pickerGrid" class="picker-grid" aria-label="Lista de runas disponibles"></div>
-    </div>
-  </div>
-
-  <!-- Tutorial -->
+  <div class="mask" id="pickerMask" role="dialog" aria-hidden="true"><div class="modal"><header><h2 id="pickerTitle">🧿 Selector de Runas <span id="pickerType"></span></h2><div class="small">Clic para añadir, o arrastra al yunque.</div></header><div class="bar"><div class="small">Atajo: <kbd>Enter</kbd> añade la última.</div><div style="display:flex; gap:6px"><button id="btnRandomPick" class="ghost">✨ Aleatoria</button><button id="btnPickerClose" class="btn-close ghost">Cerrar</button></div></div><div id="pickerGrid" class="picker-grid"></div></div></div>
   <div class="tour-mask" id="tourMask" aria-hidden="true"></div>
   <div class="hl" id="tourHL" aria-hidden="true"></div>
-  <div class="tour-card" id="tourCard" style="display:none">
-    <h3 id="tourTitle">Tutorial</h3>
-    <div id="tourText" class="minor"></div>
-    <div class="tour-actions">
-      <button id="tourSkip" class="ghost">Saltar</button>
-      <button id="tourNext" class="accent">Siguiente ▶</button>
-    </div>
-  </div>
+  <div class="tour-card" id="tourCard" style="display:none"><h3 id="tourTitle">Tutorial</h3><div id="tourText" class="minor"></div><div class="tour-actions"><button id="tourSkip" class="ghost">Saltar</button><button id="tourNext" class="accent">Siguiente ▶</button></div></div>
 
 <script>
 /* =========================
-   Estado y utilidades
+   Estado
    ========================= */
 const state = {
   password: [],
@@ -351,491 +191,361 @@ const state = {
   challengeStage: 1,
   modeMax: false,
   usedTypes: new Set(),
-  extraIndex: -1
+  extraIndex: -1,
+  highScore: 0,
+  currentScore: 0,
+  anvilEventCounter: 0,
+  anvilBonus: 1,
+  isBusy: false // ← NUEVO: control robusto del flujo "Probar"
 };
-
-const rulesBase = [
-  { id: 'primera', text: 'Desafío 1: Crea una contraseña usando 4 ingredientes distintos (mayúscula, minúscula, número, símbolo).', check: (pwd, types) => types.size >= 4 && pwd.length >= 4 },
-  { id: 'fuerza', text: 'Desafío 2: ¡Resiste! Consigue que el medidor esté en VERDE.', check: (pwd, types) => strengthScore(pwd, types).level === 'Fuerte' },
-  { id: 'maxima', text: 'Desafío 3: Cofre de Máxima Seguridad → mínimo 8 caracteres, 1 mayúscula, 1 número y 1 símbolo.', check: (pwd, types) => {
-      const s = analyze(pwd);
-      return pwd.length >= 8 && s.hasUpper && s.hasNumber && s.hasSymbol;
-    } }
-];
-
-const extraChests = [
-  { name:'Cofre Silencioso', rule:'Sin vocales (a, e, i, o, u).', check: (pwd)=> !/[aeiouáéíóú]/i.test(pwd) && pwd.length>=6 },
-  { name:'Cofre Relámpago', rule:'Al menos 10 caracteres.', check: (pwd)=> pwd.length>=10 },
-  { name:'Cofre Pirata', rule:'Debe incluir 2 símbolos diferentes.', check: (pwd)=> {
-      const syms = (pwd.match(/[^0-9a-z]/gi)||[]).filter(x=>x);
-      return new Set(syms).size>=2 && pwd.length>=8;
-    } },
-  { name:'Cofre Dragón', rule:'Empieza con letra y termina con número.', check: (pwd)=> /^[a-z]/i.test(pwd) && /[0-9]$/.test(pwd) && pwd.length>=8 }
-];
-
-/* Narrador */
-function speak(text){
-  if(!state.narratorOn || !('speechSynthesis' in window)) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'es-MX'; u.rate = 1; u.pitch = 1.05;
-  window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
-}
-
-/* Sonidos */
-const audio = { ctx: null };
-function beep(freq=800, dur=0.12, type='sine', vol=0.2){
-  try{
-    audio.ctx = audio.ctx || new (window.AudioContext||window.webkitAudioContext)();
-    const t = audio.ctx.currentTime;
-    const osc = audio.ctx.createOscillator();
-    const gain = audio.ctx.createGain();
-    osc.type = type; osc.frequency.value = freq; gain.gain.value = vol;
-    osc.connect(gain).connect(audio.ctx.destination);
-    osc.start(t); osc.stop(t+dur);
-  }catch(e){}
-}
-function magicChime(){ beep(900,.08,'triangle',.2); setTimeout(()=>beep(1200,.08,'triangle',.15),80); setTimeout(()=>beep(1600,.08,'triangle',.12),160); }
-
-/* Sets de caracteres */
-const chars = {
-  upper: 'ABCDEFGHJKLMNPQRSTUVWXYZ',
-  lower: 'abcdefghijkmnopqrstuvwxyz',
-  number: '0123456789',
-  symbol: '!@#$%&*+-=?_~^.:;'
-};
-function pick(t){ const s = chars[t]; return s[Math.floor(Math.random()*s.length)]}
-
-/* Accesos DOM */
-const el = {
-  dropzone: document.getElementById('dropzone'),
-  anvil: document.getElementById('anvil'),
-  password: document.getElementById('password'),
-  fill: document.getElementById('fill'),
-  meterTag: document.getElementById('meterTag'),
-  log: document.getElementById('log'),
-  rules: document.getElementById('rules'),
-  maestro: document.getElementById('maestro-line'),
-  ladron: document.getElementById('ladron'),
-  ladronLine: document.getElementById('ladron-line'),
-  gem: document.getElementById('gem'),
-  live: document.getElementById('aria-live'),
-  btnNarrador: document.getElementById('btnNarrador'),
-  btnMostrar: document.getElementById('btnMostrar'),
-  btnProbar: document.getElementById('btnProbar'),
-  btnBorrar: document.getElementById('btnBorrar'),
-  btnRetroceso: document.getElementById('btnRetroceso'),
-  btnModo: document.getElementById('btnModo'),
-  btnCofreExtra: document.getElementById('btnCofreExtra'),
-  inventory: document.getElementById('inventory'),
-  pickerMask: document.getElementById('pickerMask'),
-  pickerGrid: document.getElementById('pickerGrid'),
-  pickerType: document.getElementById('pickerType'),
-  btnPickerClose: document.getElementById('btnPickerClose'),
-  btnRandomPick: document.getElementById('btnRandomPick'),
-  btnTutorial: document.getElementById('btnTutorial'),
-  tourMask: document.getElementById('tourMask'),
-  tourCard: document.getElementById('tourCard'),
-  tourTitle: document.getElementById('tourTitle'),
-  tourText: document.getElementById('tourText'),
-  tourNext: document.getElementById('tourNext'),
-  tourSkip: document.getElementById('tourSkip'),
-  tourHL: document.getElementById('tourHL')
-};
-
-/* Render */
-function renderPassword(){
-  el.password.innerHTML = '';
-  for(const ch of state.password){
-    const span = document.createElement('span');
-    span.className = 'pwd-char';
-    span.textContent = state.show ? ch : '•';
-    el.password.appendChild(span);
-  }
-  const res = strengthScore(state.password.join(''), state.usedTypes);
-  el.fill.style.width = res.percent + '%';
-  el.meterTag.textContent = res.level;
-  el.meterTag.style.color = res.colorTag;
-  el.live.textContent = `Fortaleza: ${res.level}. ${Math.round(res.percent)} por ciento.`;
-}
-function setRulesText(){
-  let text = rulesBase[state.challengeStage-1].text;
-  if(state.modeMax) text += ' | Modo desafío: intenta llegar a 100 puntos de fortaleza.';
-  el.rules.textContent = text;
-}
-function logLine(msg){
-  const p = document.createElement('div');
-  p.textContent = msg;
-  el.log.prepend(p);
-}
-function sparkle(x, y){
-  const s = document.createElement('div');
-  s.className = 'sparkle';
-  s.style.left = x+'px';
-  s.style.top = y+'px';
-  el.anvil.appendChild(s);
-  setTimeout(()=>s.remove(), 900);
-}
-
-/* Drag & Drop + entradas */
-function addRune(type, clientX=null, clientY=null){
-  const ch = pick(type);
-  state.password.push(ch);
-  state.usedTypes.add(type);
-  renderPassword();
-  el.dropzone.classList.add('glow');
-  setTimeout(()=>el.dropzone.classList.remove('glow'), 350);
-  if(clientX!==null){
-    const rect = el.anvil.getBoundingClientRect();
-    sparkle(clientX-rect.left, clientY-rect.top);
-  }
-  magicChime();
-  if(type==='upper' || type==='number' || type==='symbol'){
-    speak('¡Poder añadido! ¡La mezcla la hace más fuerte!');
-  }
-}
-function addSpecificChar(ch){
-  state.password.push(ch);
-  const type = /[A-Z]/.test(ch)?'upper':(/[a-z]/.test(ch)?'lower':(/[0-9]/.test(ch)?'number':'symbol'));
-  state.usedTypes.add(type);
-  renderPassword();
-  magicChime();
-  if(type==='upper' || type==='number' || type==='symbol'){
-    speak('¡Poder añadido! ¡La mezcla la hace más fuerte!');
-  }
-}
-function setupDnD(){
-  document.querySelectorAll('.rune').forEach(r=>{
-    r.addEventListener('dragstart', ev=>{
-      ev.dataTransfer.setData('text/plain', r.dataset.type);
-    });
-    r.addEventListener('keydown', e=>{
-      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openPicker(r.dataset.type); }
-    });
-    r.addEventListener('click', ()=> openPicker(r.dataset.type));
-  });
-
-  ['dragover','drop','dragenter','dragleave'].forEach(evt=>{
-    el.dropzone.addEventListener(evt, e=> e.preventDefault());
-  });
-  el.dropzone.addEventListener('drop', e=>{
-    const dt = e.dataTransfer;
-    const type = dt.getData('text/plain');
-    const runeChar = dt.getData('text/rune-char');
-    if(runeChar){ addSpecificChar(runeChar); return; }
-    if(['upper','lower','number','symbol'].includes(type)){
-      addRune(type, e.clientX, e.clientY);
-    }
-  });
-
-  window.addEventListener('keydown', e=>{
-    if(e.ctrlKey || e.metaKey || e.altKey) return;
-    const key=e.key;
-    if(/[A-Z]/.test(key)) { state.password.push(key); state.usedTypes.add('upper'); magicChime(); renderPassword(); }
-    else if(/[a-z]/.test(key)) { state.password.push(key); state.usedTypes.add('lower'); renderPassword(); }
-    else if(/[0-9]/.test(key)) { state.password.push(key); state.usedTypes.add('number'); magicChime(); renderPassword(); }
-    else if(/[!@#$%&*+\-=?_~^.:;]/.test(key)) { state.password.push(key); state.usedTypes.add('symbol'); magicChime(); renderPassword(); }
-  });
-}
-
-/* Fortaleza */
-function analyze(pwd){
-  const hasUpper = /[A-Z]/.test(pwd);
-  const hasLower = /[a-z]/.test(pwd);
-  const hasNumber = /[0-9]/.test(pwd);
-  const hasSymbol = /[^0-9a-z]/i.test(pwd);
-  const diversity = [hasUpper, hasLower, hasNumber, hasSymbol].filter(Boolean).length;
-  return {hasUpper, hasLower, hasNumber, hasSymbol, diversity};
-}
-function strengthScore(pwd){
-  const len = pwd.length;
-  const a = analyze(pwd);
-  let score = 0;
-  score += Math.min(50, len*5);
-  score += a.diversity*10;
-  score += Math.min(10, (pwd.match(/[^a-z]/ig)||[]).length);
-  score = Math.min(100, score);
-  let level='Débil', color='#ff6b6b';
-  if(score>=35 && score<70){ level='Media'; color='#ffd166' }
-  if(score>=70){ level='Fuerte'; color='#53e88f' }
-  return {percent: score, level, colorTag: color};
-}
-
-/* Ladrón y retos */
-function thiefAttack(){
-  const pwd = state.password.join('');
-  const s = strengthScore(pwd);
-  el.ladron.classList.remove('bounce','break');
-  el.ladron.classList.add('attack');
-
-  setTimeout(()=>{
-    el.ladron.classList.remove('attack');
-    const weak = s.level==='Débil';
-    if(weak){
-      el.ladron.classList.add('break');
-      el.ladronLine.textContent = '¡Ja! ¡Esa llave se rompe fácil!';
-      speak('¡Oh, no! ¡Era demasiado débil! ¡Necesitamos más ingredientes secretos!');
-      shakeChest();
-    }else{
-      el.ladron.classList.add('bounce');
-      el.ladronLine.textContent = '¡Ay! ¡Reboté con esa súper clave!';
-      speak('¡Tu llave es inquebrantable!');
-      pulseChest();
-    }
-  }, 600);
-}
-function pulseChest(){
-  const chest = document.querySelector('.chest .sprite');
-  chest.animate([{transform:'scale(1)'},{transform:'scale(1.07)'},{transform:'scale(1)'}], {duration:600, easing:'ease-out'});
-}
-function shakeChest(){
-  const chest = document.querySelector('.chest .sprite');
-  chest.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}], {duration:300});
-}
-function checkProgress(){
-  const pwd = state.password.join('');
-  const ok = rulesBase[state.challengeStage-1].check(pwd, state.usedTypes);
-  if(ok){
-    logLine('✅ ¡Desafío superado! ' + rulesBase[state.challengeStage-1].text);
-    speak('¡Excelente, Aprendiz! Subes de nivel.');
-    state.challengeStage++;
-    state.attempts = 0;
-    if(state.challengeStage>3){ victory(); state.challengeStage = 3; }
-    setRulesText();
-  }else{
-    state.attempts++;
-    logLine('❌ Intento fallido ('+state.attempts+'/3). ¡Sigue intentando!');
-    if(state.attempts>=3){
-      state.attempts = 0;
-      el.ladronLine.textContent = '¡Me llevo… tu calcetín divertido! 😈';
-      logLine('🧦 El Ladrón robó un calcetín divertido. El Maestro te anima a intentarlo de nuevo.');
-      speak('No pasa nada. ¡Eres valiente! Volvamos a intentarlo con más ingredientes.');
-    }
-  }
-  if(state.modeMax){
-    const sc = strengthScore(pwd).percent;
-    logLine('🏆 Puntuación de fortaleza: ' + Math.round(sc));
-  }
-}
-function victory(){
-  el.gem.style.display = 'block';
-  logLine('💎 ¡Victoria! Obtuviste la Gema de la Seguridad.');
-  speak('¡Victoria! ¡Tu llave es legendaria y el cofre ha sido protegido!');
-}
-
-/* Botones */
-el.btnProbar.addEventListener('click', ()=>{
-  thiefAttack();
-  setTimeout(()=> { checkProgress(); evaluateExtra(); flagTutorialAction('pressedTest'); }, 900);
-});
-el.btnBorrar.addEventListener('click', ()=>{
-  state.password = [];
-  state.usedTypes.clear();
-  renderPassword();
-  logLine('🧹 Has limpiado el yunque.');
-});
-el.btnRetroceso.addEventListener('click', ()=>{
-  state.password.pop();
-  const s = state.password.join('');
-  const a = analyze(s);
-  state.usedTypes = new Set();
-  if(a.hasUpper) state.usedTypes.add('upper');
-  if(a.hasLower) state.usedTypes.add('lower');
-  if(a.hasNumber) state.usedTypes.add('number');
-  if(a.hasSymbol) state.usedTypes.add('symbol');
-  renderPassword();
-});
-el.btnNarrador.addEventListener('click', ()=>{
-  state.narratorOn = !state.narratorOn;
-  el.btnNarrador.textContent = `Narrador: ${state.narratorOn?'ON 🔊':'OFF 🔇'}`;
-  el.btnNarrador.setAttribute('aria-pressed', String(state.narratorOn));
-  if(state.narratorOn) speak('Narrador activado. Yo te guiaré en cada paso.');
-});
-el.btnMostrar.addEventListener('click', ()=>{
-  state.show = !state.show;
-  renderPassword();
-});
-el.btnModo.addEventListener('click', ()=>{
-  state.modeMax = !state.modeMax;
-  el.btnModo.setAttribute('aria-pressed', String(state.modeMax));
-  el.btnModo.textContent = `🏆 Modo desafío: ${state.modeMax?'ON':'OFF'}`;
-  setRulesText();
-  if(state.modeMax) speak('Modo desafío activado. ¡Apunta al máximo poder!');
-});
-el.btnCofreExtra.addEventListener('click', ()=>{
-  state.extraIndex = (state.extraIndex+1) % extraChests.length;
-  const chest = extraChests[state.extraIndex];
-  logLine(`🧭 Cofre extra: ${chest.name} → ${chest.rule}`);
-  speak(`Nuevo cofre extra: ${chest.name}. Regla: ${chest.rule}`);
-  const ok = chest.check(state.password.join(''));
-  if(ok){ logLine('✨ ¡Tu contraseña actual ya abre este cofre extra!'); }
-});
-el.btnTutorial.addEventListener('click', startTutorial);
-
-/* Inicio */
-function intro(){
-  setRulesText();
-  renderPassword();
-  logLine('🧙‍♂️ Maestro: Arrastra runas al yunque o abre el selector tocando una categoría.');
-  speak('Bienvenido, Aprendiz. El tutorial ahora permite interactuar con las categorías mientras se muestra.');
-}
-setupDnD();
-intro();
-
-/* Extra: evaluar cofre extra al probar */
-function evaluateExtra(){
-  if(state.extraIndex<0) return;
-  const chest = extraChests[state.extraIndex];
-  if(chest.check(state.password.join(''))){
-    logLine(`🧭 ${chest.name}: ¡Abierto!`);
-  }
-}
-el.btnProbar.addEventListener('click', ()=> setTimeout(evaluateExtra, 950));
-
-/* Accesibilidad táctil extra */
-el.dropzone.addEventListener('click', ()=>{ addSpecificChar('a'); });
 
 /* =========================
-   Selector de Runas
+   Reglas y datos
+   ========================= */
+const rulesBase = [
+  { text: 'Desafío 1: Usa 4 ingredientes distintos.', check: (pwd, types) => types.size >= 4 },
+  { text: 'Desafío 2: Medidor en VERDE (Fuerte).', check: (pwd) => strengthScore(pwd).level === 'Fuerte' },
+  { text: 'Desafío 3: 8+ chars, 1 mayús, 1 núm, 1 símb.', check: (pwd) => { const s = analyze(pwd); return pwd.length >= 8 && s.hasUpper && s.hasNumber && s.hasSymbol; } }
+];
+const extraChests = [
+  { name:'Cofre Silencioso', rule:'Sin vocales.', check: p=>!/[aeiouáéíóú]/i.test(p)&&p.length>=6 },
+  { name:'Cofre Relámpago', rule:'10+ caracteres.', check: p=>p.length>=10 },
+  { name:'Cofre Pirata', rule:'2+ símbolos diferentes.', check: p=>(new Set((p.match(/[^0-9a-zA-Z]/g)||[]))).size>=2&&p.length>=8 },
+  { name:'Cofre Dragón', rule:'Letra al inicio, número al final.', check: p=>/^[a-zA-Z]/.test(p)&&/[0-9]$/.test(p)&&p.length>=8 }
+];
+const TITLES = [
+  { score: 0, name: "Aprendiz de Forja" },
+  { score: 50, name: "Artesano Rúnico" },
+  { score: 75, name: "Forjador Experto" },
+  { score: 90, name: "Maestro de la Clave" },
+  { score: 100, name: "Guardián Legendario" }
+];
+const ANVIL_EVENTS = [
+  { name: "🔥 Calor Mágico", effect: () => { state.anvilBonus = 2; logLine("🔥 ¡El yunque arde! La próxima puntuación se duplicará."); playSound('success'); }},
+  { name: "🌀 Eco Rúnico", effect: () => { if(state.password.length > 0){ const last = state.password[state.password.length - 1]; addSpecificChar(last, false); logLine("🌀 ¡Un eco repite la última runa!"); }}},
+  { name: "⚡ Runa Inestable", effect: () => { if(state.password.length > 0){ state.password.pop(); addSpecificChar(pick(Object.keys(chars)[Math.floor(Math.random() * 4)]), false); logLine("⚡ ¡La última runa se volvió inestable y cambió!"); playSound('fail'); }}}
+];
+const chars = { upper: 'ABCDEFGHJKLMNPQRSTUVWXYZ', lower: 'abcdefghijkmnopqrstuvwxyz', number: '0123456789', symbol: '!@#$%&*+-=?_~^.:;' };
+const charTypeMap = {}; for (const type in chars) { for (const char of chars[type]) { charTypeMap[char] = type; } }
+
+/* =========================
+   Utilidades de UI/Audio
+   ========================= */
+const el = Object.fromEntries(Array.from(document.querySelectorAll('[id]')).map(e => [e.id, e]));
+let audioCtx;
+function initAudio() { if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { console.warn("API de Audio no compatible."); } } }
+function speak(text) { if (!state.narratorOn || !window.speechSynthesis) return; const u = new SpeechSynthesisUtterance(text); u.lang = 'es-ES'; u.rate = 1.1; u.pitch = 1.05; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
+function playSound(type) {
+  if (!audioCtx) return;
+  try {
+    const t = audioCtx.currentTime, o = audioCtx.createOscillator(), n = audioCtx.createGain();
+    n.gain.setValueAtTime(.15, t);
+    const s = { type:{f:900,t:"triangle",r:.1}, success:{f:600,t:"sine",r:.15,f2:1200}, fail:{f:400,t:"square",r:.2,f2:200}, clear:{f:500,t:"sawtooth",r:.15,f2:250}, copy:{f:880,t:"sine",r:.1}, forge:{f:150,t:"square",r:.3,f2:600} };
+    const p=s[type]||s.type; o.type=p.t; o.frequency.setValueAtTime(p.f, t);
+    if(p.f2) o.frequency.exponentialRampToValueAtTime(p.f2, t + p.r);
+    n.gain.exponentialRampToValueAtTime(.01, t + p.r);
+    o.connect(n).connect(audioCtx.destination); o.start(t); o.stop(t + p.r);
+    if(type === 'copy') { setTimeout(() => {
+      if (!audioCtx) return; const o2 = audioCtx.createOscillator(), g2 = audioCtx.createGain();
+      o2.type = 'sine'; o2.frequency.setValueAtTime(1046, audioCtx.currentTime);
+      g2.gain.setValueAtTime(.15, audioCtx.currentTime); g2.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .1);
+      o2.connect(g2).connect(audioCtx.destination); o2.start(); o2.stop(audioCtx.currentTime + .1);
+    }, 80); }
+  } catch(e) { console.error("Error de audio:", e); }
+}
+function logLine(msg) { const p = document.createElement('div'); p.textContent = msg; el.log.prepend(p); }
+function setRulesText() { let text = rulesBase[state.challengeStage - 1].text; if (state.modeMax) text += ' | Modo desafío: ¡alcanza 100!'; el.rules.textContent = text; }
+function updateTitle() { const currentTitle = TITLES.slice().reverse().find(t => state.highScore >= t.score); if (currentTitle) el.playerTitle.textContent = currentTitle.name; }
+function renderPassword() {
+  el.password.innerHTML = '';
+  state.password.forEach((char, index) => {
+    const span = document.createElement('span'); const type = charTypeMap[char] || 'symbol';
+    span.className = `pwd-char pwd-char-${type}`; span.textContent = state.show ? char : '•';
+    span.style.animationDelay = `${index * 20}ms`; el.password.appendChild(span);
+  });
+  const res = strengthScore(state.password.join(''));
+  el.fill.style.width = `${res.percent}%`; el.meterTag.textContent = res.level; el.meterTag.style.color = res.colorTag;
+  state.currentScore = Math.round(res.percent); el.currentScore.textContent = state.currentScore;
+}
+function pick(type) { const s = chars[type]; return s[Math.floor(Math.random() * s.length)]; }
+function sparkle(x, y){ const s = document.createElement('div'); s.className = 'sparkle'; s.style.left = x+'px'; s.style.top = y+'px'; el.anvil.appendChild(s); setTimeout(()=>s.remove(), 900); }
+
+/* =========================
+   Núcleo de forja
+   ========================= */
+function addSpecificChar(char, triggerEvent = true) {
+  state.password.push(char); const type = charTypeMap[char] || 'symbol'; state.usedTypes.add(type);
+  renderPassword(); playSound('type');
+  if (state.usedTypes.size >= 4) flagTutorialAction('combinedFour');
+  if (triggerEvent) {
+    state.anvilEventCounter++;
+    if (state.anvilEventCounter >= 5) {
+      (ANVIL_EVENTS[Math.floor(Math.random() * ANVIL_EVENTS.length)]).effect();
+      state.anvilEventCounter = 0;
+    }
+  }
+}
+function analyze(pwd) { const u = /[A-Z]/.test(pwd), l = /[a-z]/.test(pwd), n = /[0-9]/.test(pwd), s = /[^0-9a-zA-Z]/g.test(pwd); return { hasUpper:u, hasLower:l, hasNumber:n, hasSymbol:s, diversity: [u,l,n,s].filter(Boolean).length }; }
+function strengthScore(pwd) {
+  const len = pwd.length, a = analyze(pwd); let score = 0;
+  score += Math.min(50, len * 4); score += a.diversity * 10; if (a.hasSymbol) score += 10;
+  score *= state.anvilBonus; state.anvilBonus = 1; score = Math.min(100, score);
+  let level = 'Débil', color = "var(--danger)";
+  if (score >= 40 && score < 75) { level = 'Media'; color = "var(--warn)"; }
+  if (score >= 75) { level = 'Fuerte'; color = "var(--accent2)"; }
+  return { percent: score, level, colorTag: color };
+}
+
+/* =========================
+   Ataque y progreso
+   ========================= */
+function checkProgress() {
+  const pwd = state.password.join(''), ok = rulesBase[state.challengeStage - 1].check(pwd, state.usedTypes);
+  if (state.currentScore > state.highScore) {
+    state.highScore = state.currentScore; localStorage.setItem('magicForgeHighScore', state.highScore);
+    el.highScore.textContent = state.highScore; el.highScore.classList.add('new-record');
+    updateTitle(); setTimeout(() => el.highScore.classList.remove('new-record'), 800);
+    logLine(`🏆 ¡Nuevo récord de fortaleza: ${state.highScore}!`);
+  }
+  if (ok) {
+    logLine(`✅ ¡Desafío ${state.challengeStage} superado!`); speak('¡Excelente! Subes de nivel.');
+    playSound('success'); state.challengeStage++; state.attempts = 0;
+    if (state.challengeStage > 3) { victory(); state.challengeStage = 3; }
+    setRulesText();
+  } else {
+    state.attempts++; logLine(`❌ Intento fallido (${state.attempts}/3).`);
+    if (state.attempts >= 3) {
+      state.attempts = 0; el.ladronLine.textContent = '¡Me llevo tu calcetín! 😈';
+      logLine('🧦 El Ladrón robó algo. ¡Inténtalo de nuevo!'); speak(getRandomLine(maestroDialog.fail));
+    }
+  }
+  if (state.modeMax){ logLine('🏆 Puntuación: ' + state.currentScore); }
+}
+function victory() { el.gem.style.display = 'block'; logLine('💎 ¡Victoria! ¡Has protegido el cofre!'); speak('¡Victoria! ¡Tu llave es legendaria!'); }
+const maestroDialog = { success: ["¡Tu llave es inquebrantable!", "¡Magnífico trabajo!", "¡Esa fortaleza es legendaria!"], fail: ["No pasa nada, ¡intenta de nuevo!", "Casi lo tienes, ¡un poco más de poder!", "El Ladrón es astuto, pero tú más."] };
+const ladronDialog = { success: ["¡Ay! ¡Reboté con esa súper clave!", "¡Imposible! ¡Está sellado!", "¡Argh! ¡Volveré!"], fail: ["¡Ja! ¡Esa llave se rompe fácil!", "¡Demasiado predecible!", "¡Contraseña débil, postre para mí!"] };
+function getRandomLine(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function thiefAttack() {
+  const s = strengthScore(state.password.join(''));
+  el.ladron.classList.remove('bounce', 'break'); el.ladron.classList.add('attack');
+  setTimeout(() => {
+    el.ladron.classList.remove('attack');
+    const weak = s.level === 'Débil' || s.percent < 50;
+    if (weak) {
+      el.ladron.classList.add('break');
+      const line = getRandomLine(ladronDialog.fail); el.ladronLine.textContent = line; speak(line); shakeChest(); playSound('fail');
+    } else {
+      el.ladron.classList.add('bounce');
+      const line = getRandomLine(ladronDialog.success); el.ladronLine.textContent = line; speak(getRandomLine(maestroDialog.success)); pulseChest(); playSound('success');
+    }
+    // ← SIEMPRE rehabilita al final del ataque
+    state.isBusy = false;
+    el.btnProbar.disabled = false;
+  }, 700);
+}
+function pulseChest() { document.querySelector('.chest .sprite').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.07)' }, { transform: 'scale(1)' }], 600); }
+function shakeChest() { document.querySelector('.chest .sprite').animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], 300); }
+function playForgingAnimation() {
+  el.btnProbar.disabled = true;
+  const pRect = el.password.getBoundingClientRect(), cRect = document.querySelector('.chest .sprite').getBoundingClientRect();
+  const sX = pRect.left + pRect.width / 2, sY = pRect.top + pRect.height / 2; playSound('forge');
+  for (let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      const spark = document.createElement('div');
+      spark.className = 'forging-spark';
+      const angle = Math.random() * Math.PI * 2, radius = Math.random() * 25;
+      spark.style.left = `${sX + Math.cos(angle) * radius}px`;
+      spark.style.top = `${sY + Math.sin(angle) * radius}px`;
+      spark.style.setProperty('--tx', `${cRect.left + cRect.width / 2 - sX}px`);
+      spark.style.setProperty('--ty', `${cRect.top + cRect.height / 2 - sY}px`);
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 700);
+    }, i * 50);
+  }
+}
+
+/* =========================
+   Picker de runas
    ========================= */
 let lastPicked = '';
-function openPicker(type){
-  el.pickerType.textContent = `(${type==='upper'?'Mayúsculas':type==='lower'?'Minúsculas':type==='number'?'Números':'Símbolos'})`;
-  el.pickerGrid.innerHTML = '';
-  const set = chars[type];
-  for(const ch of set){
+function openPicker(type) {
+  const typeName = type === 'upper' ? 'Mayúsculas' : type === 'lower' ? 'Minúsculas' : type === 'number' ? 'Números' : 'Símbolos';
+  el.pickerType.textContent = `(${typeName})`; el.pickerGrid.innerHTML = '';
+  for (const char of chars[type]) {
     const cell = document.createElement('div');
-    cell.className = 'pick';
-    cell.textContent = ch;
-    cell.setAttribute('draggable','true');
-    cell.title = 'Clic: añadir • Arrastrar: suelta en el yunque';
-    cell.addEventListener('click', ()=>{
-      addSpecificChar(ch);
-      lastPicked = ch;
-      flagTutorialAction('pickedChar');
-    });
-    cell.addEventListener('dragstart', ev=>{
-      ev.dataTransfer.setData('text/rune-char', ch);
-    });
+    cell.className = 'pick'; cell.textContent = char; cell.draggable = true;
+    cell.title = 'Clic: añadir • Arrastrar: soltar';
+    cell.onclick = () => { addSpecificChar(char); lastPicked = char; flagTutorialAction('pickedChar'); };
+    cell.ondragstart = e => e.dataTransfer.setData('text/rune-char', char);
     el.pickerGrid.appendChild(cell);
   }
-  el.pickerMask.style.display = 'flex';
-  el.pickerMask.setAttribute('aria-hidden','false');
-  speak('Abriendo selector de runas. Elige el carácter que prefieras.');
-  flagTutorialAction('openedPicker');
+  el.pickerMask.style.display = 'flex'; el.pickerMask.setAttribute('aria-hidden', 'false');
+  speak('Abriendo selector.'); flagTutorialAction('openedPicker');
 }
-function closePicker(){
-  el.pickerMask.style.display = 'none';
-  el.pickerMask.setAttribute('aria-hidden','true');
-}
-document.getElementById('btnPickerClose').addEventListener('click', closePicker);
-el.pickerMask.addEventListener('click', (e)=>{ if(e.target===el.pickerMask) closePicker(); });
-el.btnRandomPick.addEventListener('click', ()=>{
-  const t = /Mayúsculas/.test(el.pickerType.textContent)?'upper':
-            (/Minúsculas/.test(el.pickerType.textContent)?'lower':
-             (/Números/.test(el.pickerType.textContent)?'number':'symbol'));
-  addRune(t);
-});
-window.addEventListener('keydown', (e)=>{
-  if(e.key==='Enter' && el.pickerMask.style.display==='flex' && lastPicked){
-    addSpecificChar(lastPicked);
-  }
-});
+function closePicker() { el.pickerMask.style.display = 'none'; el.pickerMask.setAttribute('aria-hidden', 'true'); }
 
 /* =========================
-   Tutorial Interactivo
+   Tutorial
    ========================= */
 const tour = {
-  active:false, step:0, actions:{},
-  steps:[
-    { id:'intro', text:'¡Hola, Aprendiz! Soy el Maestro Forjador. Ahora hay un <b>selector de runas</b>. <br> Paso 1: <b>Toca cualquier categoría</b> (Mayúscula, Minúscula, Número o Símbolo) para abrir el selector. (Ahora puedes interactuar aunque el tutorial esté visible).',
-      highlight: ()=> el.inventory, waitFor:'openedPicker', onShow:()=>speak('Paso uno. Abre el selector tocando una categoría de runas.') },
-    { id:'pick', text:'Paso 2: <b>Elige una runa</b> del selector. Puedes <b>clic</b> para añadir o <b>arrastrar al yunque</b>.',
-      highlight: ()=> el.pickerMask.querySelector('.modal'), waitFor:'pickedChar', onShow:()=>speak('Paso dos. Elige una runa del selector y añádela al yunque.') },
-    { id:'combine', text:'Paso 3: Forja una llave combinando <b>4 ingredientes diferentes</b>. Usa el selector para añadir Mayúscula, Minúscula, Número y Símbolo.',
-      highlight: ()=> el.anvil, waitUntil: ()=> state.usedTypes.size>=4, onShow:()=>speak('Paso tres. Combina cuatro ingredientes distintos para fortalecer tu llave.') },
-    { id:'meter', text:'Paso 4: Mira el <b>Medidor de Fortaleza</b>. Si está en verde, ¡muy bien! Ahora <b>pulsa “Probar contraseña”</b> para enfrentar al Ladrón.',
-      highlight: ()=> el.fill.closest('.meter'), waitFor:'pressedTest', onShow:()=>speak('Paso cuatro. Observa el medidor y presiona Probar contraseña.') },
-    { id:'max', text:'Paso 5: Cofre de Máxima Seguridad. Crea una contraseña con <b>8+ caracteres</b> que incluya <b>1 mayúscula, 1 número y 1 símbolo</b>.',
-      highlight: ()=> el.rules, waitUntil: ()=>{
-        const pwd = state.password.join(''); const a=analyze(pwd);
-        return pwd.length>=8 && a.hasUpper && a.hasNumber && a.hasSymbol;
-      }, onShow:()=>speak('Paso cinco. Construye una contraseña de máxima seguridad: ocho o más caracteres, con mayúscula, número y símbolo.') },
-    { id:'end', text:'¡Tutorial completo! 🔮 Has dominado el yunque, el selector y el medidor. Explora <b>Cofre extra</b> y el <b>Modo desafío</b> para llegar a 100.',
-      highlight: ()=> el.btnCofreExtra, onShow:()=>speak('¡Excelente! Has completado el tutorial. Explora cofres extra y el modo desafío para seguir mejorando.') }
+  active: false, step: 0, actions: {},
+  steps: [
+    { id: 'welcome', text: '¡Bienvenido a la Forja! Tu misión es crear llaves (contraseñas) tan fuertes que el Ladrón de Secretos no pueda romperlas para robar el Cofre.', highlight: () => el.stage },
+    { id: 'characters', text: 'Estos son los personajes: Yo, el <b>Maestro</b>, te guiaré. El <b>Ladrón</b> intentará romper tus llaves. Y el <b>Cofre</b> es lo que debemos proteger.', highlight: () => el.characters },
+    { id: 'runes', text: 'Estas son tus herramientas. Tienes 4 tipos de runas: <b>Mayúsculas, Minúsculas, Números y Símbolos</b>. La clave de una llave fuerte es la <b>mezcla</b>.', highlight: () => el.inventory },
+    { id: 'action1', text: 'Empecemos. <b>Haz clic en cualquier categoría de runa</b> para ver los caracteres específicos que puedes usar.', highlight: () => el.inventory, waitFor: "openedPicker" },
+    { id: 'action2', text: '¡Excelente! Ahora <b>elige una runa</b> del selector. Haz <b>clic</b> para añadirla al yunque.', highlight: () => el.pickerMask.querySelector(".modal"), waitFor: "pickedChar" },
+    { id: 'rules', text: 'Esta es la <b>Regla del Cofre</b> actual. Te dice qué necesitas para superar el desafío y avanzar de nivel.', highlight: () => el.rules },
+    { id: 'action3', text: 'Ahora, combina runas de los <b>4 tipos diferentes</b> para cumplir el primer desafío.', highlight: () => el.anvil, waitFor: "combinedFour" },
+    { id: 'meter', text: '¡Bien hecho! Este es el <b>Medidor de Fortaleza</b>. Una barra verde significa que tu llave es fuerte y segura.', highlight: () => el.meterTag.closest(".meter-container") },
+    { id: 'action4', text: 'Cuando estés listo, pulsa <b>Probar</b>. Verás una animación de forjado y luego el Ladrón atacará.', highlight: () => el.btnProbar, waitFor: "pressedTest" },
+    { id: 'end', text: '¡Tutorial completo! 🔮 Ahora conoces todos los secretos. ¡Sigue forjando para mejorar tu <b>Rango</b> y explora los <b>Cofres Extra</b>!', highlight: () => el.controls }
   ]
 };
-
-function startTutorial(){
-  tour.active = true; tour.step = 0; tour.actions = {};
-  showTourUI(true);
-  gotoStep(0);
-}
-function showTourUI(show){
-  el.tourMask.style.display = show?'block':'none';
-  el.tourCard.style.display = show?'block':'none';
-  el.tourHL.style.display = show?'block':'none';
-  if(show){ positionTourCardCenter(); }
-}
-function positionTourCardCenter(){
-  const w = el.tourCard.getBoundingClientRect().width;
-  el.tourCard.style.left = `calc(50% - ${w/2}px)`;
-  el.tourCard.style.top = `10vh`;
-}
-function highlightElement(dom){
-  if(!dom) return;
-  const r = dom.getBoundingClientRect();
-  const pad = 6;
-  el.tourHL.style.display='block';
-  el.tourHL.style.left = `${r.left - pad}px`;
-  el.tourHL.style.top = `${r.top - pad}px`;
-  el.tourHL.style.width = `${r.width + pad*2}px`;
-  el.tourHL.style.height = `${Math.max(44, r.height + pad*2)}px`;
-}
-function gotoStep(i){
-  tour.step = i;
-  const s = tour.steps[i];
-  if(!s){ endTutorial(); return; }
-  el.tourTitle.textContent = `Tutorial (${i+1}/${tour.steps.length})`;
-  el.tourText.innerHTML = s.text;
+function startTutorial() { if (tour.active) return; tour.active = true; tour.step = 0; tour.actions = {}; showTourUI(true); gotoStep(0); }
+function showTourUI(show) { el.tourMask.style.display = el.tourCard.style.display = el.tourHL.style.display = show ? 'block' : 'none'; if(show) positionTourCardCenter(); }
+function positionTourCardCenter() { el.tourCard.style.left = `calc(50% - ${el.tourCard.offsetWidth / 2}px)`; el.tourCard.style.top = '10vh'; }
+function highlightElement(dom) { if (!dom) return; const r = dom.getBoundingClientRect(), pad = 6; el.tourHL.style.left = `${r.left - pad}px`; el.tourHL.style.top = `${r.top - pad}px`; el.tourHL.style.width = `${r.width + pad * 2}px`; el.tourHL.style.height = `${Math.max(44, r.height + pad * 2)}px`; }
+function gotoStep(i) {
+  tour.step = i; const s = tour.steps[i]; if (!s) return endTutorial(false);
+  el.tourTitle.textContent = `Tutorial (${i + 1}/${tour.steps.length})`; el.tourText.innerHTML = s.text;
   highlightElement(s.highlight());
-  if(s.onShow) s.onShow();
-  el.tourNext.disabled = false;
-  if(s.waitFor || s.waitUntil){
-    el.tourNext.disabled = true;
-    waitForCondition(s);
-  }
+  el.tourNext.disabled = !!s.waitFor; if (el.tourNext.disabled) waitForCondition(s);
 }
-function waitForCondition(s){
-  if(s.waitFor){
-    const id = s.waitFor;
-    const iv = setInterval(()=>{
-      if(!tour.active) return clearInterval(iv);
-      if(tour.actions[id]===true){ clearInterval(iv); el.tourNext.disabled=false; speak('¡Bien! Sigue al siguiente paso.'); }
-    }, 200);
-  }else if(s.waitUntil){
-    const iv = setInterval(()=>{
-      if(!tour.active) return clearInterval(iv);
-      if(s.waitUntil()){ clearInterval(iv); el.tourNext.disabled=false; speak('¡Fantástico! Avanza al siguiente paso.'); }
-    }, 250);
-  }
+function waitForCondition(s) {
+  const waitFor = s.waitFor; const interval = setInterval(() => {
+    if (!tour.active) return clearInterval(interval);
+    if (tour.actions[waitFor] === true) { clearInterval(interval); el.tourNext.disabled = false; speak('¡Bien! Siguiente paso.'); }
+  }, 250);
 }
-function flagTutorialAction(name){ tour.actions[name] = true; }
-el.tourNext.addEventListener('click', ()=>{
-  if(!tour.active) return;
-  if(tour.step < tour.steps.length-1) gotoStep(tour.step+1); else endTutorial();
-});
-el.tourSkip.addEventListener('click', endTutorial);
-function endTutorial(){
-  tour.active=false; showTourUI(false);
-  el.tourHL.style.display='none';
-  speak('Tutorial finalizado. ¡A forjar llaves legendarias!');
+function flagTutorialAction(name) { if (tour.active) tour.actions[name] = true; }
+function endTutorial(skipped = false) {
+  tour.active = false; showTourUI(false);
+  localStorage.setItem('magicForgeTutorialCompleted', 'true');
+  // ← Seguridad: por si el tutorial terminó en medio de una animación
+  state.isBusy = false;
+  el.btnProbar.disabled = false;
+  speak(skipped ? 'Tutorial omitido.' : 'Tutorial finalizado. ¡A forjar!');
 }
 
-/* Inicio automático del tutorial (con el FIX activo) */
-setTimeout(()=>{ startTutorial(); }, 600);
+/* =========================
+   Listeners
+   ========================= */
+function setupEventListeners() {
+  document.body.addEventListener('click', initAudio, { once: true });
 
-/* Reposicionar highlight al cambiar de tamaño */
-window.addEventListener('resize', ()=>{ if(tour.active){ highlightElement(tour.steps[tour.step].highlight()); positionTourCardCenter(); } });
+  el.btnProbar.addEventListener('click', () => {
+    // Guardas de seguridad
+    if (state.isBusy) return;
+    if (state.password.length === 0) { logLine('🔔 Añade runas antes de probar.'); return; }
+
+    state.isBusy = true;
+    playForgingAnimation();
+    setTimeout(() => { thiefAttack(); checkProgress(); flagTutorialAction('pressedTest'); }, 700);
+
+    // Fallback de seguridad: si algo falla, reactivar en 3s
+    setTimeout(() => { state.isBusy = false; el.btnProbar.disabled = false; }, 3000);
+  });
+
+  el.btnBorrar.addEventListener('click', () => { state.password = []; state.usedTypes.clear(); renderPassword(); playSound('clear'); logLine('🧹 Yunque limpiado.'); });
+
+  el.btnRetroceso.addEventListener('click', () => {
+    if (state.password.length === 0) return;
+    state.password.pop();
+    const s = state.password.join(''), a = analyze(s);
+    state.usedTypes.clear();
+    if (a.hasUpper) state.usedTypes.add('upper');
+    if (a.hasLower) state.usedTypes.add('lower');
+    if (a.hasNumber) state.usedTypes.add('number');
+    if (a.hasSymbol) state.usedTypes.add('symbol');
+    renderPassword();
+  });
+
+  el.btnGenerar.addEventListener('click', () => {
+    let p = [pick('upper'), pick('lower'), pick('number'), pick('symbol')];
+    const a = Object.values(chars).join('');
+    for (let i = 4; i < 12; i++) { p.push(a[Math.floor(Math.random() * a.length)]); }
+    state.password = p.sort(() => Math.random() - .5);
+    const s = state.password.join(''), an = analyze(s);
+    state.usedTypes.clear();
+    if(an.hasUpper)state.usedTypes.add('upper');
+    if(an.hasLower)state.usedTypes.add('lower');
+    if(an.hasNumber)state.usedTypes.add('number');
+    if(an.hasSymbol)state.usedTypes.add('symbol');
+    renderPassword(); logLine("🎲 Llave aleatoria forjada.");
+  });
+
+  el.btnCopiar.addEventListener('click', () => {
+    const p = state.password.join('');
+    if (p.length === 0) { logLine("📋 Nada que copiar."); return; }
+    navigator.clipboard.writeText(p).then(() => {
+      logLine("📋 ¡Contraseña copiada!"); playSound('copy'); el.btnCopiar.textContent = "✅ ¡Copiado!";
+      setTimeout(() => { el.btnCopiar.textContent = "📋 Copiar"; }, 1500);
+    }).catch(()=> logLine("❌ No se pudo copiar."));
+  });
+
+  el.btnNarrador.addEventListener('click', () => { state.narratorOn = !state.narratorOn; el.btnNarrador.textContent = `Narrador: ${state.narratorOn ? 'ON 🔊' : 'OFF 🔇'}`; el.btnNarrador.setAttribute('aria-pressed', String(state.narratorOn)); if (state.narratorOn) speak('Narrador activado.'); });
+  el.btnMostrar.addEventListener('click', () => { state.show = !state.show; renderPassword(); });
+  el.btnModo.addEventListener('click', () => { state.modeMax = !state.modeMax; el.btnModo.setAttribute('aria-pressed', String(state.modeMax)); el.btnModo.textContent = `🏆 Modo desafío: ${state.modeMax ? 'ON' : 'OFF'}`; setRulesText(); if (state.modeMax) speak('Modo desafío activado.'); });
+  el.btnCofreExtra.addEventListener('click', () => { state.extraIndex = (state.extraIndex + 1) % extraChests.length; const c = extraChests[state.extraIndex]; logLine(`🧭 Cofre extra: ${c.name} → ${c.rule}`); if (c.check(state.password.join(''))) logLine('✨ ¡Tu llave actual ya abre este cofre!'); });
+  el.btnTutorial.addEventListener('click', startTutorial);
+
+  document.querySelectorAll('.rune').forEach(r => {
+    r.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', r.dataset.type));
+    r.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(r.dataset.type); } });
+    r.addEventListener('click', () => openPicker(r.dataset.type));
+  });
+  ['dragover', 'drop', 'dragenter', 'dragleave'].forEach(evt => el.dropzone.addEventListener(evt, e => e.preventDefault()));
+  el.dropzone.addEventListener('drop', e => {
+    const t = e.dataTransfer.getData('text/plain'), rC = e.dataTransfer.getData('text/rune-char');
+    if (rC) { addSpecificChar(rC); }
+    else if (chars[t]) {
+      addSpecificChar(pick(t));
+      sparkle(e.clientX - el.anvil.getBoundingClientRect().left, e.clientY - el.anvil.getBoundingClientRect().top);
+    }
+  });
+
+  window.addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey || e.altKey || el.pickerMask.style.display === 'flex' || (document.activeElement && document.activeElement.tagName !== 'BODY')) return;
+    if (charTypeMap[e.key]) { e.preventDefault(); addSpecificChar(e.key); }
+  });
+
+  el.btnPickerClose.addEventListener('click', closePicker);
+  el.pickerMask.addEventListener('click', e => { if (e.target === el.pickerMask) closePicker(); });
+  el.btnRandomPick.addEventListener('click', () => {
+    const m = el.pickerType.textContent.match(/\(([^)]+)\)/); if (!m) return;
+    const n = m[1].toLowerCase().replace('ú', 'u');
+    const k = Object.keys(chars).find(key => key.includes(n.slice(0, 4))); if (k) addSpecificChar(pick(k));
+  });
+  window.addEventListener('keydown', e => {
+    if (el.pickerMask.style.display !== 'flex') return;
+    if (e.key === 'Enter' && lastPicked) { addSpecificChar(lastPicked); }
+    else if (e.key === 'Escape') { closePicker(); }
+  });
+
+  el.tourNext.addEventListener('click', () => { if (!tour.active) return; if (tour.step < tour.steps.length - 1) { gotoStep(tour.step + 1); } else { endTutorial(false); } });
+  el.tourSkip.addEventListener('click', () => endTutorial(true));
+  window.addEventListener('resize', () => { if (tour.active) { highlightElement(tour.steps[tour.step].highlight()); positionTourCardCenter(); } });
+}
+
+/* =========================
+   Init
+   ========================= */
+function setRulesText(){ let text = rulesBase[state.challengeStage - 1].text; if(state.modeMax) text += ' | Modo desafío: ¡alcanza 100!'; el.rules.textContent = text; }
+function init() {
+  state.highScore = parseInt(localStorage.getItem('magicForgeHighScore')) || 0;
+  el.highScore.textContent = state.highScore;
+  setRulesText();
+  updateTitle();
+  renderPassword();
+  setupEventListeners();
+  logLine('¡Forja tu primera llave mágica!');
+  speak('Bienvenido a la Forja de Contraseñas Mágicas');
+
+  // ← SIEMPRE iniciar el tutorial desde el principio del juego
+  startTutorial();
+}
+init();
 </script>
 </body>
 </html>
